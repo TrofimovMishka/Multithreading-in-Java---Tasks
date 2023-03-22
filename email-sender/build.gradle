@@ -1,0 +1,26 @@
+plugins {
+    id 'java'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+    // https://mvnrepository.com/artifact/javax.mail/mail
+    implementation 'javax.mail:mail:1.4.7'
+    // https://mvnrepository.com/artifact/javax.activation/activation
+    implementation 'javax.activation:activation:1.1.1'
+    // https://mvnrepository.com/artifact/com.sun.mail/smtp
+    implementation 'com.sun.mail:smtp:2.0.1'
+
+}
+
+test {
+    useJUnitPlatform()
+}
