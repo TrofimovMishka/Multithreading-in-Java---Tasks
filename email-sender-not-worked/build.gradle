@@ -18,7 +18,6 @@ dependencies {
     implementation 'javax.activation:activation:1.1.1'
     // https://mvnrepository.com/artifact/com.sun.mail/smtp
     implementation 'com.sun.mail:smtp:2.0.1'
-
 }
 
 test {
