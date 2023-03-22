@@ -1,6 +1,6 @@
 package converters;
 
-class NumberTo16StringConverter {
+class NumberToStringConverter {
     public static void main(String[] args) {
         int toConvert = 12;
 
