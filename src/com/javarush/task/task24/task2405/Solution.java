@@ -10,28 +10,41 @@ public class Solution implements Action {
     private int param;
 
     private Action solutionAction = new Action() {
-        //напишите тут ваш код
-        public void someAction() {
+        private FirstClass first;
+        private SecondClass second;
 
-            //напишите тут ваш код
-            SecondClass secondClass = new SecondClass();
-            for (int i = param; i > 0; i--) {
-                System.out.println(param--);
+        public void someAction() {
+            if (param > 0) {
+                if (first == null) {
+                    first = new FirstClass() {
+                        @Override
+                        public void someAction() {
+                            super.someAction();
+                            Solution.this.someAction();
+                        }
+
+                        @Override
+                        public Action getDependantAction() {
+                            System.out.println(param);
+                            param--;
+                            return param > 0 ? Solution.this : this;
+                        }
+                    };
+                }
+                first.getDependantAction().someAction();
+            } else {
+                if (second == null) {
+                    second = new SecondClass() {
+                        @Override
+                        public void someAction() {
+                            sb.append(SPECIFIC_ACTION_FOR_ANONYMOUS_SECOND_CLASS_PARAM).append(param);
+                            super.someAction();
+
+                        }
+                    };
+                }
+                second.someAction();
             }
-            param++;
-            if(param > 0){
-                FirstClass firstClass = new FirstClass() {
-                    @Override
-                    public Action getDependantAction() {
-                        super.someAction();
-                        return this;
-                    }
-                };
-                firstClass.someAction();
-            }
-            secondClass.someAction();
-            param--;
-            System.out.println((SecondClass.SPECIFIC_ACTION_FOR_ANONYMOUS_SECOND_CLASS_PARAM+param).trim());
         }
     };
 
