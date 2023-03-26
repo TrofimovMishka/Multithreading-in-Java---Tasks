@@ -1,5 +1,7 @@
 package com.javarush.task.task24.task2408;
 
+import java.time.LocalDate;
+import java.util.Collections;
 import java.util.Date;
 
 public class Dog implements Pet {
@@ -41,23 +43,19 @@ public class Dog implements Pet {
 
     public Sayable toSayable(final int i) {
         class DogPet extends SuperDog implements Sayable {
-            private String getName() {
-                //we use logic from Dog and SuperDog - 2 classes!
-                return getSuperQuotes() + Dog.this.name + getSuperQuotes();
-            }
-
             @Override
             public String say() {
-                if (i < 1)
-                    return getName() + " спит.";
+                if (i < 1) {
+                    return String.format("%s спит.", getName());
+                }
+                return String.format("%s лает г%sв! %s",
+                        getName(),
+                        String.join("", Collections.nCopies(i, "a")),
+                        formatter.format(new Date()));
+            }
 
-                StringBuilder sb = new StringBuilder(getName()).append(" лает г");
-                for (int j = 0; j < i; j++)
-                    sb.append("а");
-                sb.append("в!");
-                sb.append(" ");
-                sb.append(formatter.format(new Date()));
-                return sb.toString();
+            private String getName() {
+                return String.format("%1$s %2$s %1$s", getSuperQuotes(), name);
             }
         }
         return new DogPet();
