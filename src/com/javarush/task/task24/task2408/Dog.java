@@ -1,15 +1,7 @@
 package com.javarush.task.task24.task2408;
 
-import java.sql.Date;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Collections;
+import java.util.Date;
 
-/*
-В работе вам иногда будет нужно закастить класс к какому-нибудь другому классу, не интерфейсу :)))
-Класс DogPet использует 2 класса - SuperDog и Dog, разберись с getName в классе DogPet
-Так намного лучше, чем Copy+Paste!
- */
 public class Dog implements Pet {
     private String name;
 
@@ -33,34 +25,39 @@ public class Dog implements Pet {
      * Пример, " *** Барбос *** "
      * Логика метода say:
      * Если i < 1, то используя метод getName вывести на экран, что собака спит. Пример, " *** Шарик ***  спит."'
-     * Иначе вывести фразу: "имя_собаки лает гааав! сегодняшняя_дата". Пример для i=3, " *** Тузик ***  лает гааав! 13-ноя-2013 Ср"
+     * Иначе вывести фразу: "имя_собаки лает гааав! сегодняшняя_дата". Пример для i = 3, " *** Тузик ***  лает гааав! 13-ноя-2013 Ср"
      * Для форматирования даты используйте formatter из класса SuperDog.
      * <p/>
      * <b>Пример вывода:</b>
-     * *** Барбос ***  лает гааааав! 13-ноя.-2013 ср
-     * *** Тузик ***  лает гаав! 13-ноя.-2013 ср
-     * *** Бобик ***  лает гааав! 13-ноя.-2013 ср
+     *  *** Барбос ***  лает гааааав! 13-ноя.-2013 ср
+     *  *** Тузик ***  лает гаав! 13-ноя.-2013 ср
+     *  *** Бобик ***  лает гааав! 13-ноя.-2013 ср
      * Мышь пищит.
-     * *** Шарик ***  спит.
+     *  *** Шарик ***  спит.
      *
      * @param i количество букв 'а' в слове гав
      * @return экземпляр класса DogPet
      */
+
     public Sayable toSayable(final int i) {
         class DogPet extends SuperDog implements Sayable {
-            @Override
-            public String say() {
-                if (i < 1) {
-                    return String.format("%s спит.", getName());
-                }
-                return String.format("%s лает г%sв! %s",
-                        getName(),
-                        String.join("", Collections.nCopies(i, "a")),
-                        formatter.format(Date.valueOf(LocalDate.now())));
+            private String getName() {
+                //we use logic from Dog and SuperDog - 2 classes!
+                return getSuperQuotes() + Dog.this.name + getSuperQuotes();
             }
 
-            private String getName() {
-                return String.format("%1$s %2$s %1$s", getSuperQuotes(), name);
+            @Override
+            public String say() {
+                if (i < 1)
+                    return getName() + " спит.";
+
+                StringBuilder sb = new StringBuilder(getName()).append(" лает г");
+                for (int j = 0; j < i; j++)
+                    sb.append("а");
+                sb.append("в!");
+                sb.append(" ");
+                sb.append(formatter.format(new Date()));
+                return sb.toString();
             }
         }
         return new DogPet();
