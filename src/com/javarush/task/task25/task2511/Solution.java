@@ -1,6 +1,5 @@
 package com.javarush.task.task25.task2511;
 
-import java.sql.SQLOutput;
 import java.util.TimerTask;
 
 /* 
@@ -20,13 +19,13 @@ public class Solution extends TimerTask {
             String currentThreadName = thread.getName();
             String starName = changedThreadName(currentThreadName);
 
-            String result = exception.getMessage().replaceFirst(currentThreadName, starName);
+            String result = exception.getMessage().replaceAll(currentThreadName, starName);
 
             System.out.println(result);
         };    //init handler here
     }
 
-    private String changedThreadName (String threadName) {
+    private String changedThreadName(String threadName) {
         StringBuilder sb = new StringBuilder();
         for (char c : threadName.toCharArray()) {
             sb.append("*");
